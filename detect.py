@@ -27,7 +27,7 @@ from collections import OrderedDict
 
 
 @torch.no_grad()
-def run(weights='best_4.pt',  # model.pt path(s)
+def run(weights='backend_model/best_4.pt',  # model.pt path(s)
         source='data/images',  # file/dir/URL/glob, 0 for webcam
         imgsz=640,  # inference size (pixels)
         conf_thres=0.25,  # confidence threshold
@@ -205,11 +205,10 @@ def run(weights='best_4.pt',  # model.pt path(s)
     print(f'Done. ({time.time() - t0:.3f}s)')
     
     output["label_list"]=label_list
-
     print(json.dumps(output, ensure_ascii=False, indent=4))
 
-    with open('result.json', 'w', encoding='UTF-8') as outfile:
-        json.dump(output, outfile, indent=4, ensure_ascii=False)
+    # with open('result.json', 'w', encoding='UTF-8') as outfile:
+    #     json.dump(output, outfile, indent=4, ensure_ascii=False)
 
 def parse_opt():
     parser = argparse.ArgumentParser()
