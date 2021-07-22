@@ -43,9 +43,6 @@ def run(weights='best_4.pt',  # model.pt path(s)
         agnostic_nms=False,  # class-agnostic NMS
         augment=False,  # augmented inference
         visualize=False,  # visualize features
-        update=False,  # update all models
-        # project='runs/detect',  # save results to project/name
-        # name='exp',  # save results to project/name
         exist_ok=False,  # existing project/name ok, do not increment
         line_thickness=3,  # bounding box thickness (pixels)
         hide_labels=False,  # hide labels
@@ -60,10 +57,6 @@ def run(weights='best_4.pt',  # model.pt path(s)
     output=OrderedDict()
     #output["video_id"]:"id"
     label_list=[]
-
-    # Directories
-    # save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
-    # (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
     # Initialize
     set_logging()
@@ -128,9 +121,6 @@ def run(weights='best_4.pt',  # model.pt path(s)
             else:
                 p, s, im0, frame = path, '', im0s.copy(), getattr(dataset, 'frame', 0)
 
-            # p = Path(p)  # to Path
-            # save_path = str(save_dir / p.name)  # img.jpg
-            # txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
             s += '%gx%g ' % img.shape[2:]  # print string
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             imc = im0.copy() if save_crop else im0  # for save_crop
@@ -160,13 +150,6 @@ def run(weights='best_4.pt',  # model.pt path(s)
                         "class": int(i)
                         })
 
-                    # if save_img or save_crop or view_img:  # Add bbox to image
-                    #     c = int(cls)  # integer class
-                    #     label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
-                    #     plot_one_box(xyxy, im0, label=label, color=colors(c, True), line_thickness=line_thickness)
-                    #     if save_crop:
-                    #         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
-
             # Print time (inference + NMS)
             print(f'{s}Done. ({t2 - t1:.3f}s)')
 
@@ -175,8 +158,6 @@ def run(weights='best_4.pt',  # model.pt path(s)
                 cv2.imshow(str(p), im0)
                 cv2.waitKey(1)  # 1 millisecond
 
-    if update:
-        strip_optimizer(weights)  # update model (to fix SourceChangeWarning)
 
     print(f'Done. ({time.time() - t0:.3f}s)')
     
