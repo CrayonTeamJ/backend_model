@@ -15,6 +15,7 @@ RUN apt-get install -y postgresql ffmpeg libffi-dev gcc musl-dev gcc g++ python3
 
 RUN pip install --upgrade pip
 # COPY . ./
+RUN pip3 install torchvision
 
 RUN pip install -r requirements.txt
 
