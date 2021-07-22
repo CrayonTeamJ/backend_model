@@ -9,26 +9,6 @@ import ffmpeg
 import shutil
 
 app = Flask(__name__)
-
-app.config["MONGO_URI"] = "mongodb+srv://team-j-test01:team-j-test01@cluster0.ybzxz.mongodb.net/sample_restaurants?retryWrites=true&w=majority"
-mongo = PyMongo(app)
-
-
-# @app.route('/to_yolo', methods = ['POST'])
-# def user_only():
-#     video_info = request.json
-
-#     #data = {'video_pk': pk, 's3_video': video_path}
-#     video_pk = request.form['video_pk']
-#     video_path = request.form['s3_video']
-
-#     video_to_Img(video_path)
-#     result = run(source='backend_model/data/images')
-#     return make_response(jsonify({'pk': video_info['video_pk'], 's3_path': video_info['s3_video']}), 200)
-
-    
-#flask run --host=0.0.0.0 --port=5001
-
 app.config["MONGO_URI"] = "mongodb+srv://Crayon:pc2Af0vKZWbkT7GL@clustercrayon.lij0j.mongodb.net/voicedb?retryWrites=true&w=majority"
 mongodb_client = PyMongo(app)
 coll = mongodb_client.db.video_files_list
@@ -44,8 +24,7 @@ def run_yolo():
     dir = 'data/'+str(video_pk)
     os.makedirs(dir)
     output_name = dir+'/image-%3d.jpg'
-    video_to_Img(video_path, video_pk,output_name)
-    # ffmpeg.input(video_path).filter('fps', fps='1').output(output_name, start_number=0, **{'qscale:v': 3}).overwrite_output().run(quiet=True)
+    video_to_Img(video_path, video_pk, output_name)
     
     #run Yolo
     result = run(source=dir)
@@ -65,7 +44,7 @@ def run_yolo():
         # upload local image files to gcp storage
         upload_blob_file(dir + '/'+ filename, 'images/'+ str(video_pk)+ '/'+ filename)
 
-        #url 형식
+        #url form
         img_path = 'https://teamj-data.s3.ap-northeast-2.amazonaws.com/images/'+str(video_pk)+'/'+filename
         image_list.append({'time':count, 'path':img_path})
         count+=1
@@ -79,3 +58,6 @@ def run_yolo():
 
     return make_response(jsonify({'Result': 'Success', 'video_pk': video_pk}), 200)
 
+
+
+#flask run --host=0.0.0.0 --port=5001
