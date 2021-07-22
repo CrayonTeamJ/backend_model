@@ -1,12 +1,14 @@
 
-FROM python:3.8.6-alpine
+FROM python:3.8-slim
 
 WORKDIR /app
 COPY . /app
 
 # COPY requirements.txt /app/
 
-RUN apk add postgresql-dev ffmpeg libressl-dev libffi-dev gcc musl-dev gcc g++ python3-dev musl-dev zlib-dev jpeg-dev #--(5.2)
+# RUN apk add --update --no-cache build-base
+RUN apt-get clean && apt-get update
+RUN apt-get install -y postgresql ffmpeg libffi-dev gcc musl-dev gcc g++ python3-dev musl-dev #--(5.2)
 
 # RUN pip install --upgrade pip
 # RUN /usr/local/bin/python -m pip install --upgrade pip
