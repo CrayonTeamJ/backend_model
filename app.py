@@ -42,7 +42,7 @@ def run_yolo():
     video_path = req_data['video_path']
 
     dir = 'data/'+str(video_pk)
-    os.mkdir(dir)
+    os.makedirs(dir)
     output_name = dir+'/image-%3d.jpg'
     video_to_Img(video_path, video_pk,output_name)
     # ffmpeg.input(video_path).filter('fps', fps='1').output(output_name, start_number=0, **{'qscale:v': 3}).overwrite_output().run(quiet=True)

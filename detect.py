@@ -44,8 +44,8 @@ def run(weights='best_4.pt',  # model.pt path(s)
         augment=False,  # augmented inference
         visualize=False,  # visualize features
         update=False,  # update all models
-        project='runs/detect',  # save results to project/name
-        name='exp',  # save results to project/name
+        # project='runs/detect',  # save results to project/name
+        # name='exp',  # save results to project/name
         exist_ok=False,  # existing project/name ok, do not increment
         line_thickness=3,  # bounding box thickness (pixels)
         hide_labels=False,  # hide labels
@@ -61,9 +61,9 @@ def run(weights='best_4.pt',  # model.pt path(s)
     #output["video_id"]:"id"
     label_list=[]
 
-    Directories
-    save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
-    (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
+    # Directories
+    # save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
+    # (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
     # Initialize
     set_logging()
@@ -111,7 +111,7 @@ def run(weights='best_4.pt',  # model.pt path(s)
         t1 = time_sync()
         pred = model(img,
                      augment=augment,
-                     visualize=increment_path(save_dir / Path(path).stem, mkdir=True) if visualize else False)[0]
+                     visualize=False)[0]
 
         # Apply NMS
         pred = non_max_suppression(pred, conf_thres, iou_thres, classes, agnostic_nms, max_det=max_det)
@@ -128,9 +128,9 @@ def run(weights='best_4.pt',  # model.pt path(s)
             else:
                 p, s, im0, frame = path, '', im0s.copy(), getattr(dataset, 'frame', 0)
 
-            p = Path(p)  # to Path
-            save_path = str(save_dir / p.name)  # img.jpg
-            txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
+            # p = Path(p)  # to Path
+            # save_path = str(save_dir / p.name)  # img.jpg
+            # txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
             s += '%gx%g ' % img.shape[2:]  # print string
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             imc = im0.copy() if save_crop else im0  # for save_crop
@@ -176,27 +176,27 @@ def run(weights='best_4.pt',  # model.pt path(s)
                 cv2.waitKey(1)  # 1 millisecond
 
             # Save results (image with detections)
-            if save_img:
-                if dataset.mode == 'image':
-                    cv2.imwrite(save_path, im0)
-                else:  # 'video' or 'stream'
-                    if vid_path[i] != save_path:  # new video
-                        vid_path[i] = save_path
-                        if isinstance(vid_writer[i], cv2.VideoWriter):
-                            vid_writer[i].release()  # release previous video writer
-                        if vid_cap:  # video
-                            fps = vid_cap.get(cv2.CAP_PROP_FPS)
-                            w = int(vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-                            h = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-                        else:  # stream
-                            fps, w, h = 30, im0.shape[1], im0.shape[0]
-                            save_path += '.mp4'
-                        vid_writer[i] = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
-                    vid_writer[i].write(im0)
+    #         if save_img:
+    #             if dataset.mode == 'image':
+    #                 cv2.imwrite(save_path, im0)
+    #             else:  # 'video' or 'stream'
+    #                 if vid_path[i] != save_path:  # new video
+    #                     vid_path[i] = save_path
+    #                     if isinstance(vid_writer[i], cv2.VideoWriter):
+    #                         vid_writer[i].release()  # release previous video writer
+    #                     if vid_cap:  # video
+    #                         fps = vid_cap.get(cv2.CAP_PROP_FPS)
+    #                         w = int(vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    #                         h = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    #                     else:  # stream
+    #                         fps, w, h = 30, im0.shape[1], im0.shape[0]
+    #                         save_path += '.mp4'
+    #                     vid_writer[i] = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
+    #                 vid_writer[i].write(im0)
 
-    if save_txt or save_img:
-        s = f"\n{len(list(save_dir.glob('labels/*.txt')))} labels saved to {save_dir / 'labels'}" if save_txt else ''
-        print(f"Results saved to {save_dir}{s}")
+    # if save_txt or save_img:
+    #     s = f"\n{len(list(save_dir.glob('labels/*.txt')))} labels saved to {save_dir / 'labels'}" if save_txt else ''
+    #     print(f"Results saved to {save_dir}{s}")
 
     if update:
         strip_optimizer(weights)  # update model (to fix SourceChangeWarning)
