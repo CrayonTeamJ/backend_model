@@ -27,7 +27,7 @@ from collections import OrderedDict
 
 
 @torch.no_grad()
-def run(weights='best_4.pt',  # model.pt path(s)
+async def run(weights='best_4.pt',  # model.pt path(s)
         source='data/images',  # file/dir/URL/glob, 0 for webcam
         imgsz=640,  # inference size (pixels)
         conf_thres=0.25,  # confidence threshold
