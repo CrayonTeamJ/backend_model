@@ -160,11 +160,8 @@ async def run(weights='best_4.pt',  # model.pt path(s)
 
 
     print(f'Done. ({time.time() - t0:.3f}s)')
-    
-    output["label_list"]=label_list
-    #print(json.dumps(output, ensure_ascii=False, indent=4))
-
-    return output
+ 
+    return label_list
 
     # with open('result.json', 'w', encoding='UTF-8') as outfile:
     #     json.dump(output, outfile, indent=4, ensure_ascii=False)
