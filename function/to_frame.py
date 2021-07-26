@@ -11,4 +11,4 @@ def video_to_Img(video_path, video_pk, output_name):
         print('stderr:', e.stderr.decode('utf8'))
 
 
-# video_to_Img('https://teamj-data.s3.ap-northeast-2.amazonaws.com/video/bts_colbert.mp4')
+# video_to_Img('https://crayon-team-j.s3.ap-northeast-2.amazonaws.com/video/video0.mp4', '1', 'data/1/image-%3d.jpg')

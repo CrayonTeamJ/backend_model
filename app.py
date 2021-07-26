@@ -28,7 +28,7 @@ async def to_s3(video_pk, dir):
         upload_blob_file(dir + '/'+ filename, 'images/'+ str(video_pk)+ '/'+ filename)
 
         #url form
-        img_path = 'https://teamj-data.s3.ap-northeast-2.amazonaws.com/images/'+str(video_pk)+'/'+filename
+        img_path = 'https://crayon-team-j.s3.ap-northeast-2.amazonaws.com/images/'+str(video_pk)+'/'+filename
         image_list.append({'time':count, 'path':img_path})
         count+=1
 
@@ -68,6 +68,7 @@ def run_yolo1():
     video_pk = req_data['video_pk']
     video_path = req_data['video_path']
     asyncio.run(run_yolo(req_data, video_pk, video_path))
+    
 
     return make_response(jsonify({'Result': 'Success', 'video_pk': video_pk}), 200)
     
