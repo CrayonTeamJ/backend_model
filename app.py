@@ -10,7 +10,7 @@ import shutil
 import asyncio
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb+srv://Crayon:pc2Af0vKZWbkT7GL@clustercrayon.lij0j.mongodb.net/voicedb?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = os.environ['MONGO_URI_env']
 mongodb_client = PyMongo(app)
 coll = mongodb_client.db.video_files_list
 coll2 = mongodb_client.db.images_coll
