@@ -58,7 +58,7 @@ async def run_yolo(req_data, video_pk, video_path):
     
 
     # delete local directory
-    shutil.rmtree(dir)
+    shutil.rmtree(dir) 
 
 
 
@@ -74,5 +74,7 @@ def run_yolo1():
     
 
 
+if __name__ == '__main__':
+    app.run(debug=True)
 
 #flask run --host=0.0.0.0 --port=5001
