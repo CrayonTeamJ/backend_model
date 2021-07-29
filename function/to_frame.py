@@ -2,13 +2,13 @@ import subprocess
 import os
 import ffmpeg
 
-def video_to_Img(file_path):
+def video_to_Img(video_path, video_pk, output_name):
     
     try:
-        ffmpeg.input(file_path).filter('fps', fps='1').output('images/image-%3d.jpg', start_number=0, **{'qscale:v': 3}).overwrite_output().run(quiet=True)
+        ffmpeg.input(video_path).filter('fps', fps='1').output(output_name, start_number=0, **{'qscale:v': 2}).overwrite_output().run(quiet=True)
     except ffmpeg.Error as e:
         print('stdout:', e.stdout.decode('utf8'))
         print('stderr:', e.stderr.decode('utf8'))
 
 
-video_to_Img('https://youtu.be/CuklIb9d3fI')
+# video_to_Img('https://crayon-team-j.s3.ap-northeast-2.amazonaws.com/video/video0.mp4', '1', 'data/1/image-%3d.jpg')
